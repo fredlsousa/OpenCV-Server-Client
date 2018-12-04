@@ -7,7 +7,7 @@ import time
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')     #Database to identify the faces
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')                      #Database to identify the eyes
 
-def recvall(sock, count):
+def recvall(sock, count):                                           #cria um buffer para transmissao
     buf = b''
     while count:
         newbuf = sock.recv(count)
@@ -60,7 +60,6 @@ def UDP_SOCKET(UDP_IP, UDP_PORT):
     i = 0
     buf = 1024
     while True:
-        print 'New client.'
         bytes = 0
         f = open('preImg' + str(i) + '.jpg', "wb")
         startstamp = time.time()

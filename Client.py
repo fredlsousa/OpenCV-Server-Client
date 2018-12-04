@@ -9,8 +9,9 @@ def TCP_SOCKET(TCP_IP, TCP_PORT, times):
     sock = socket.socket()
     sock.connect((TCP_IP, TCP_PORT))
 
-    frame = cv2.imread('Foto.jpg')
+
     for i in range(0, int(times)):
+        frame = cv2.imread('Foto' + str(i) + '.jpg')
         encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
         result, imgencode = cv2.imencode('.jpg', frame, encode_param)
         data = numpy.array(imgencode)
@@ -28,7 +29,7 @@ def UDP_SOCKET(UDP_IP, UDP_PORT, times):
     buf = 1024
     startstamp = time.time()
     for i in range(0, int(times)):
-        f = open("Foto.jpg", "rb")
+        f = open('Foto' + str(i) + '.jpg', "rb")
         data = f.read(buf)
         while (data):
             if (udp.sendto(data, dest)):
