@@ -11,14 +11,15 @@ def TCP_SOCKET(TCP_IP, TCP_PORT, times):
 
 
     for i in range(0, int(times)):
-        frame = cv2.imread('Foto' + str(i) + '.jpg')
-        encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
-        result, imgencode = cv2.imencode('.jpg', frame, encode_param)
-        data = numpy.array(imgencode)
-        stringData = data.tostring()
+        for j in range(0, 9):
+            frame = cv2.imread('Foto' + str(j) + '.jpg')
+            encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 90]
+            result, imgencode = cv2.imencode('.jpg', frame, encode_param)
+            data = numpy.array(imgencode)
+            stringData = data.tostring()
 
-        sock.send(str(len(stringData)).ljust(16))
-        sock.send(stringData)
+            sock.send(str(len(stringData)).ljust(16))
+            sock.send(stringData)
     sock.close()
 
 
@@ -29,11 +30,12 @@ def UDP_SOCKET(UDP_IP, UDP_PORT, times):
     buf = 1024
     startstamp = time.time()
     for i in range(0, int(times)):
-        f = open('Foto' + str(i) + '.jpg', "rb")
-        data = f.read(buf)
-        while (data):
-            if (udp.sendto(data, dest)):
-                data = f.read(buf)
+        for j in range(0,9):
+            f = open('Foto' + str(i) + '.jpg', "rb")
+            data = f.read(buf)
+            while (data):
+                if (udp.sendto(data, dest)):
+                    data = f.read(buf)
     f.close()
     udp.sendto("end image", dest)
     stopstamp = time.time()

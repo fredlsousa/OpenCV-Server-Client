@@ -7,6 +7,8 @@ import time
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')     #Database to identify the faces
 eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')                      #Database to identify the eyes
 
+
+
 def recvall(sock, count):                                           #cria um buffer para transmissao
     buf = b''
     while count:
@@ -26,7 +28,7 @@ def newClient(clientsocket, addr, i):
         if checkFace == 1:                                          #se existir uma face na foto, armazena no hd do server
             cv2.imwrite('received ' + str(i) + '.jpg', decimg)
         else:
-            cv2.imwrite('received ' + str(i) + '.jpg', decimg)
+            print 'Face not found.'
         i = i + 1
     clientsocket.close()                                            #fecha o socket de conexao
 
@@ -40,7 +42,7 @@ def TCP_SOCKET(TCP_IP, TCP_PORT):
 
     print 'Server Launched!'
     print 'Waiting for clients...'
-    i = 0
+
     while True:
         conn, addr = s.accept()                                 #aceita a conexao
         print 'Connection started, from: ', addr
@@ -87,7 +89,6 @@ def UDP_SOCKET(UDP_IP, UDP_PORT):
         else:
             # cv2.imwrite('C:\\Users\\Frederico\\Desktop\\RedesTp\\NoFace\\received ' + str(i) + '.jpg', decimg)
             print 'Face not found.'
-            cv2.imwrite('received ' + str(i) + '.jpg', decimg)
 
     udp.close()
 
@@ -116,6 +117,7 @@ def faceRecognition(image, i):
 
 IP = raw_input('Server IP Address: ')
 PORT = raw_input('Server Port: ')
+i = 0
 
 print 'Choose server protocol: '
 print '1 - TCP Server;'
